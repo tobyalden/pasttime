@@ -15,12 +15,15 @@ import openfl.Assets;
 class GameScene extends Scene
 {
     private var level:Level;
+    private var background:Backdrop;
 
     override public function begin() {
         level = add(new Level("level"));
         for(entity in level.entities) {
             add(entity);
         }
+        background = new Backdrop("graphics/background.png");
+        addGraphic(background, 10);
     }
 
     override public function update() {
