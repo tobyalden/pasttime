@@ -28,6 +28,7 @@ class Player extends Entity
         sprite.add("idle", [1]);
         sprite.add("run", [0, 1, 2, 1], 6);
         sprite.add("jump", [5]);
+        sprite.add("crouch", [8]);
         sprite.play("idle");
         sprite.x = -19;
         sprite.y = -7;
