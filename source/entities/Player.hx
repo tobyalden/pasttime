@@ -53,19 +53,30 @@ class Player extends Entity
             else {
                 velocity.x = 0;
             }
+
+            velocity.y = MAX_FALL_SPEED / 4;
+            if(Input.pressed("jump")) {
+                velocity.y = -JUMP_POWER;
+            }
+        }
+        else {
+            var gravity:Float = GRAVITY;
+            if(Math.abs(velocity.y) < JUMP_FLOAT_VELOCITY) {
+                gravity *= JUMP_FLOAT_FACTOR;
+            }
+            velocity.y += gravity * HXP.elapsed;
+            velocity.y = Math.min(velocity.y, MAX_FALL_SPEED);
         }
 
-        var gravity:Float = GRAVITY;
-        if(Math.abs(velocity.y) < JUMP_FLOAT_VELOCITY) {
-            gravity *= JUMP_FLOAT_FACTOR;
-        }
-        velocity.y += gravity * HXP.elapsed;
-        velocity.y = Math.min(velocity.y, MAX_FALL_SPEED);
-
-        if(isOnGround() && Input.pressed("jump")) {
-            velocity.y = -JUMP_POWER;
-        }
         moveBy(velocity.x * HXP.elapsed, velocity.y * HXP.elapsed, ["walls"]);
+    }
+
+    override public function moveCollideX(e:Entity) {
+        return true;
+    }
+
+    override public function moveCollideY(e:Entity) {
+        return true;
     }
 
     private function animation() {
